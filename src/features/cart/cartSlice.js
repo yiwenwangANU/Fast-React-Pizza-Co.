@@ -55,6 +55,11 @@ export const getTotalPizzaNumber = (store) =>
 
 export const getCart = (store) => store.cart.cart;
 
+export const getPizzaNumberById = (pizzaId) => (store) => {
+  return (
+    store.cart.cart.find((item) => item.pizzaId === pizzaId)?.quantity ?? 0
+  );
+};
 export default cartSlice.reducer;
 export const {
   addItem,

@@ -1,10 +1,12 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Button from "../../ui/Button";
 import { formatCurrency } from "../../utils/helpers";
-import { addItem } from "../cart/cartSlice";
+import { addItem, getPizzaNumberById } from "../cart/cartSlice";
+import DeleteItem from "../cart/DeleteItem";
 function MenuItem({ pizza }) {
   const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
   const dispatch = useDispatch();
+  const currentQuantity = useSelector(getPizzaNumberById(id));
 
   function handleAddToCart(e) {
     e.preventDefault();
@@ -38,9 +40,12 @@ function MenuItem({ pizza }) {
             </p>
           )}
           {!soldOut && (
-            <Button type="small" onClick={handleAddToCart}>
-              Add to Cart
-            </Button>
+            <div className="space-x-3">
+              {currentQuantity > 0 && <DeleteItem pizzaId={id} />}
+              <Button type="small" onClick={handleAddToCart}>
+                Add to Cart
+              </Button>
+            </div>
           )}
         </div>
       </div>
