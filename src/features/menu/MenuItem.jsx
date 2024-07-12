@@ -3,6 +3,7 @@ import Button from "../../ui/Button";
 import { formatCurrency } from "../../utils/helpers";
 import { addItem, getPizzaNumberById } from "../cart/cartSlice";
 import DeleteItem from "../cart/DeleteItem";
+import UpdateItemQuantities from "../cart/UpdateItemQuantities";
 function MenuItem({ pizza }) {
   const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
   const dispatch = useDispatch();
@@ -41,10 +42,16 @@ function MenuItem({ pizza }) {
           )}
           {!soldOut && (
             <div className="space-x-3">
-              {currentQuantity > 0 && <DeleteItem pizzaId={id} />}
-              <Button type="small" onClick={handleAddToCart}>
-                Add to Cart
-              </Button>
+              {currentQuantity > 0 ? (
+                <div className="flex place-items-center gap-3 sm:gap-8">
+                  <UpdateItemQuantities pizzaId={id} />
+                  <DeleteItem pizzaId={id} />
+                </div>
+              ) : (
+                <Button type="small" onClick={handleAddToCart}>
+                  Add to Cart
+                </Button>
+              )}
             </div>
           )}
         </div>
